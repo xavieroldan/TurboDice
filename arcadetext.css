@@ -4,9 +4,41 @@
       rgba(0, 150, 0, 0.75), black 120%
     );
     height: 100vh;
-
-
 }
+
+div{
+  font-family: 'Press Start 2P', cursive;
+  font-size:150%;
+  text-align: center;
+  color: white;
+  text-shadow: -2px 0 0 #fdff2a,
+  -4px 0 0 #df4a42,
+  2px 0 0 #91fcfe,
+  4px 0 0 #4405fc
+  }  
+
+input{
+  font-family: 'Press Start 2P', cursive; 
+  font-size:150%;  
+  }
+
+ a{
+  font-family: 'Press Start 2P', cursive; 
+  font-size:150%;  
+  text-align: center;
+  color: white;
+  text-shadow: -2px 0 0 #fdff2a,
+  -4px 0 0 #df4a42,
+  2px 0 0 #91fcfe,
+  4px 0 0 #4405fc
+ }
+
+  a:link{
+    text-decoration: none;
+    text-align: center;
+  } 
+
+  
 
 body {
     background-color: black;
@@ -37,15 +69,4 @@ body {
   
   pre {
     margin: 0;
-  }
-  
-div{
-    font-family: 'Press Start 2P', cursive;
-    font-size:150%;
-    text-align: center;
-    color: white;
-    text-shadow: -2px 0 0 #fdff2a,
-    -4px 0 0 #df4a42,
-    2px 0 0 #91fcfe,
-    4px 0 0 #4405fc
-    }  
+  } 
