@@ -6,9 +6,20 @@
     height: 100vh;
 }
 
+  #bigText{
+    font-family: 'Press Start 2P', cursive;
+    font-size:4vw;
+    text-align: center;
+    color: white;
+    text-shadow: -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc
+    }  
+
 div{
   font-family: 'Press Start 2P', cursive;
-  font-size:150%;
+  font-size:3vw;
   text-align: center;
   color: white;
   text-shadow: -2px 0 0 #fdff2a,
@@ -19,12 +30,12 @@ div{
 
 input{
   font-family: 'Press Start 2P', cursive; 
-  font-size:150%;  
+  font-size:3vw;  
   }
 
  a{
   font-family: 'Press Start 2P', cursive; 
-  font-size:150%;  
+  font-size:3vw;  
   text-align: center;
   color: white;
   text-shadow: -2px 0 0 #fdff2a,
