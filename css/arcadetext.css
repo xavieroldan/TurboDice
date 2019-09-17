@@ -14,7 +14,9 @@
     text-shadow: -2px 0 0 #fdff2a,
     -4px 0 0 #df4a42,
     2px 0 0 #91fcfe,
-    4px 0 0 #4405fc    
+    4px 0 0 #4405fc
+    onmouseover="this.style.color='#FF4500'"
+    onmouseout="this.style.color='white'" 
     }  
 
 div{
@@ -41,7 +43,7 @@ input{
   text-shadow: -2px 0 0 #fdff2a,
   -4px 0 0 #df4a42,
   2px 0 0 #91fcfe,
-  4px 0 0 #4405fc  
+  4px 0 0 #4405fc
  }
 
   a:link{
