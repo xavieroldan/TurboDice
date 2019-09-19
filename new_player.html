@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">    
     <link href="./css/arcadetext.css" rel="stylesheet" type="text/css"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js">
+    </script>
+    <script src="./js/new_player.js"></script>
 </head>
 <body id="grad1">    
         <h1>
@@ -19,13 +23,26 @@
         <br>   
         <div>Input your name:</div>
         <br> 
-        <form action="./error.html" method="post" name="newplayer">
+        <form onsubmit="return newplayer()" action="javascript:void(0);">
                 <label for="name"> 
-                    <div><input id="newname" name="email" required="true" maxlength="15" size="15" type="text" value=""/>
+                    <div>
+                        <input 
+                        id="newname" 
+                        name="playername" 
+                        required="true" 
+                        maxlength="15" 
+                        size="15" 
+                        type="text" 
+                        value="" />
                     </div>                                       
-                </label>
-                   
-
-   
+                </label> 
+        </form>  
+        <br>
+        <div class="tab blink" id="response"></div>
+        <div> 
+            <a id="play" href="error.html" 
+            style="visibility: hidden" 
+            >To play</button> 
+        </div>
 </body>
 </html>
