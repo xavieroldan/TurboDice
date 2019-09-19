@@ -17,7 +17,8 @@ function newplayer(){
 
     var x = document.getElementById("response"); // Set the response text to void
     var y = document.getElementById("play");//Get the link to play element
-    x.innerHTML ="";
+    x.innerHTML =""; 
+    x.style.color="#FF4500";     
     y.style.visibility="hidden";
     var myObj = { name : null }; 
     var name= document.getElementById("newname").value;
@@ -34,27 +35,26 @@ function newplayer(){
         cache: false,
         processData: false,
         success: function()
-                    {
-                        alert("Success");
-                        output="Creado jugador "+name;
+                    {                        
+                        output="Created player "+name;
                         created=true;
                     },
         error: function(xhr, ajaxOptions, thrownError)
-                    {
-                        alert("Error");
+                    {                        
                         created = false;
                         switch (xhr.status) 
                             {
                                 case 409 : 
-                                    output = "El jugador ya existe, prueba de nuevo";
+                                    output = "The player already exists, try again";
                                     break;
-                                case 401 : output = "El nombre está vacío, prueba de nuevo";
+                                case 401 : 
+                                    output = "The name is empty, try again";
                                     break;
+                                default:   
+                                    output = "Communications error, try again later"
                             }
                     }        
             }); 
-    alert(output);
-
     if(created) 
         {
             y.style.visibility ="visible";
