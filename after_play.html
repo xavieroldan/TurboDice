@@ -21,22 +21,23 @@
         <br> 
         <br>    
         <br>   
-        <br>   
-        <div>
+        <br>  
+        <div id="playagain" style="visibility:hidden">Play again?</div>
+        <br> 
+        <div id="playyes" style="visibility:hidden">
                 <a href="./error.html" 
                 onmouseover="this.style.color='#FF4500'"
                 onmouseout="this.style.color='white'" 
-                >Select player</a>
+                onclick="return playgame()";
+                >Yes</a>
         </div>
         <br> 
-        <div>
-                <a href="./new_player.html"
+        <div id="playno" style="visibility:hidden">
+                <a href="./index.html"
                 onmouseover="this.style.color='#FF4500'"
                 onmouseout="this.style.color='white'" 
-                >Create player</a>
+                >No</a>
         </div>
-        
-
-   
+        <div style="visibility:hidden" id="idplayer"></div>
 </body>
 </html>

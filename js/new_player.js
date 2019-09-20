@@ -1,4 +1,5 @@
 //Get all players
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function getall(){
     var options = {
         method: 'get'
@@ -13,6 +14,7 @@ function getall(){
 
 //Create a new player
 //✧*｡٩(ˊᗜˋ*)و✧*｡   
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function newplayer(){
 
     var resp = document.getElementById("response"); // Set the response text to void
@@ -74,9 +76,89 @@ function newplayer(){
 }
 
 //Play new game
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function playgame()
 {
+    //Get the player Id
     var idPlayer = document.getElementById("idplayer").textContent;
-    alert("Jugamos con: "+idPlayer);
+    var name ="XD"; 
+    var dices = new Array(); 
+    var resultTxt= "Results: ";   
+    var winner = false;
+    var played = false;
 
+    //Play the game
+    var played = false;
+    $.ajax
+    ({
+        url: "http://localhost:8080/players/"+idPlayer+"/games/",
+        type: 'POST',
+        async: false,
+        cache: false,
+        processData: false, 
+        contentType: "application/json; charset=utf-8",
+        dataType: "json", 
+        success: function(player)
+            {   
+                played=true;
+                //Get the dice game result
+                var listGame = player.listGame; //Get the list of games
+                var numGames = listGame.length; //Get the number of games
+                numGames --;   //Get the current position game  
+                var lastGame = new Array();        
+                lastGame = listGame[numGames]; //Get the last game
+                winner = lastGame.isWinner;
+                //Get the result of the dices  
+                var listDiceResult = lastGame.listDiceResult; 
+                listDiceResult.forEach(
+                        function(results)
+                            {
+                                dices.push(results.result);                        
+                            }
+                    );                
+                //Get the player name
+                name = player.name;
+                //Change the return message
+                if(winner)
+                {
+                    //Wins
+                    output= name+".You wins!";
+                }
+                else
+                {
+                    //Lost
+                    output= name+".You lost.";
+                }
+                //Add the dice results
+                dices.forEach(function(result) 
+                    {
+                       resultTxt += result+" ";
+                    });
+                //Add the dices results
+                output= output+"\n"+resultTxt;
+                played=true;                        
+            },
+        error: function(xhr, ajaxOptions, thrownError)
+            {                        
+                played = false;
+                switch (xhr.status) 
+                    {
+                        case 409 : 
+                            output = "No fue posible localizar el jugador:"+name;
+                            break;
+                        case 404 :
+                            output = "No se pudo realizar la jugada. Error 404" ;
+                            break;  
+                        default:   
+                            output = "Communications error, try later";
+                    }
+            }            
+    }); 
+    alert(output);
+    //Play again?
+    alert("Estoy en la nueva página");
+    document.getElementById("playagain").style.visibility ="visible";
+    document.getElementById("playyes").style.visibility ="visible";
+    document.getElementById("playno").style.visibility ="visible";
+    document.getElementById("play").style.visibility ="hidden";
 }
