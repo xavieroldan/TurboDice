@@ -15,11 +15,11 @@ function getall(){
 //✧*｡٩(ˊᗜˋ*)و✧*｡   
 function newplayer(){
 
-    var x = document.getElementById("response"); // Set the response text to void
-    var y = document.getElementById("play");//Get the link to play element
-    x.innerHTML =""; 
-    x.style.color="#FF4500";     
-    y.style.visibility="hidden";
+    var resp = document.getElementById("response"); // Set the response text to void
+    var play = document.getElementById("play");//Get the the play link element
+    resp.innerHTML =""; 
+    resp.style.color="#FF4500";     
+    play.style.visibility="hidden";
     var myObj = { name : null }; 
     var name= document.getElementById("newname").value;
     myObj.name = name;
@@ -33,11 +33,16 @@ function newplayer(){
         data: JSON.stringify(myObj),
         async: false,
         cache: false,
-        processData: false,
-        success: function()
+        processData: false,  
+        success: function(data)
                     {                        
+                        //save the idPlayer value into the page
+                        var idPlayer = document.getElementById("idplayer");
+                        idPlayer.innerHTML = data.idPlayer;
+                        
+                        //Change the return message
                         output="Created player "+name;
-                        created=true;
+                        created=true;                        
                     },
         error: function(xhr, ajaxOptions, thrownError)
                     {                        
@@ -51,17 +56,27 @@ function newplayer(){
                                     output = "The name is empty, try again";
                                     break;
                                 default:   
-                                    output = "Communications error, try again later"
+                                    output = "Communications error, try later"
                             }
                     }        
             }); 
     if(created) 
         {
-            y.style.visibility ="visible";
-            y.style.color="#FF4500";   
+            play.style.visibility ="visible";
+            play.style.color="#FF4500";
+            document.getElementById("nameform").style.visibility ="hidden";  
+            document.getElementById("textform").style.visibility ="hidden"; 
         }
     else       
-      x.innerHTML= output; 
+    resp.innerHTML = output; 
 
     return output;                             
+}
+
+//Play new game
+function playgame()
+{
+    var idPlayer = document.getElementById("idplayer").textContent;
+    alert("Jugamos con: "+idPlayer);
+
 }

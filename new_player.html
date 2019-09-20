@@ -21,9 +21,9 @@
             </h1>   
         <br>        
         <br>   
-        <div>Input your name:</div>
+        <div id="textform">Input your name:</div>
         <br> 
-        <form onsubmit="return newplayer()" action="javascript:void(0);">
+        <form id="nameform" onsubmit="return newplayer()" action="javascript:void(0);">
                 <label for="name"> 
                     <div>
                         <input 
@@ -39,10 +39,14 @@
         </form>  
         <br>
         <div class="tab blink" id="response"></div>
-        <div> 
-            <a id="play" href="error.html" 
+        <div class="tab blink" > 
+            <a id="play" href="#" 
             style="visibility: hidden" 
-            >To play</button> 
+            onmouseover="this.style.color='#FF4500'"
+            onmouseout="this.style.color='#FF4500'" 
+            onclick="return playgame()"
+            >Let's play!</button> 
         </div>
+        <div style="visibility:hidden" id="idplayer"></div>
 </body>
 </html>
