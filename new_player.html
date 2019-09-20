@@ -22,7 +22,8 @@
         <br>        
         <br>   
         <div id="textform">Input your name:</div>
-        <br> 
+        <div id="playagain" style="visibility:hidden">Play again?</div>
+        <br>
         <form id="nameform" onsubmit="return newplayer()" action="javascript:void(0);">
                 <label for="name"> 
                     <div>
@@ -36,17 +37,29 @@
                         value="" />
                     </div>                                       
                 </label> 
-        </form>  
-        <br>
-        <div class="tab blink" id="response"></div>
+        </form>
         <div class="tab blink" > 
-            <a id="play" href="#" 
-            style="visibility: hidden" 
-            onmouseover="this.style.color='#FF4500'"
-            onmouseout="this.style.color='#FF4500'" 
-            onclick="return playgame()"
-            >Let's play!</button> 
+                <a id="play" href="#" 
+                style="visibility: hidden" 
+                onmouseover="this.style.color='#FF4500'"
+                onmouseout="this.style.color='#FF4500'"
+                onclick="return playgame()"
+                >Play game</button> 
+            </div>   
+        <div id="playyes" style="visibility:hidden">
+                <a href="#" 
+                onmouseover="this.style.color='#FF4500'"
+                onmouseout="this.style.color='white'" 
+                onclick="return playgame()";
+                >Yes</a>
         </div>
+        <div id="playno" style="visibility:hidden">
+                <a href="./index.html"
+                onmouseover="this.style.color='#FF4500'"
+                onmouseout="this.style.color='white'" 
+                >No</a>
+        </div>          
+        <div class="tab blink" id="response"></div>        
         <div style="visibility:hidden" id="idplayer"></div>
 </body>
 </html>
