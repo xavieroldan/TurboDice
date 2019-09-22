@@ -5,7 +5,6 @@
     );
     height: 100vh;
 }
-
   #bigText{
     font-family: 'Press Start 2P', cursive;
     font-size:4vw;
@@ -17,7 +16,26 @@
     4px 0 0 #4405fc
     onmouseover="this.style.color='#FF4500'"
     onmouseout="this.style.color='white'" 
-    }  
+    } 
+
+  .arcade{
+    font-family: 'Press Start 2P', cursive;
+    font-size:4vw;
+    text-align: center;
+    color: white;
+    text-shadow: -2px 0 0 #fdff2a,
+    -4px 0 0 #df4a42,
+    2px 0 0 #91fcfe,
+    4px 0 0 #4405fc
+    onmouseover="this.style.color='#FF4500'"
+    onmouseout="this.style.color='white'" 
+    }   
+    
+  a.arcade{
+    onmouseover="this.style.color='#FF4500'"
+    onmouseout="this.style.color='white'" 
+  }  
+    
 .blink {
   -webkit-animation: blink .75s linear infinite;
   -moz-animation: blink .75s linear infinite;

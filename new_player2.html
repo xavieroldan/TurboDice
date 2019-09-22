@@ -13,7 +13,7 @@
 </head>
 <body id="grad1">    
         <h1>
-            <div>
+            <div id="title">
                 <img src="./images/diceAnim.gif" alt="dice" style="width:10%;height:10%;">
                 <a href="./index.html" style="font-size: 4vw;"
                 onmouseover="this.style.color='#FF4500'"
@@ -21,8 +21,45 @@
                 >Turbo Dice</a>
                 <img src="./images/dice2Anim.gif" alt="dice" style="width:10%;height:10%;">
             </div> 
-            </h1>   
-        <br>        
+            </h1> 
+                <div id="d1">
+                </div>
+                <div id="d2" >
+                    <br> 
+                    <a href="#" id="select_player"
+                    onmouseover="this.style.color='#FF4500'"
+                    onmouseout="this.style.color='white'" >
+                        Select Player</form>
+                        <br>                        
+                        <br>                        
+                    <a href="#" id="select_player"
+                    onmouseover="this.style.color='#FF4500'"
+                    onmouseout="this.style.color='white'" >
+                        Create Player</form>                        
+                </div>
+                <div id="d3">
+                    <table style="width: 100%">
+                        <tr>
+                            <td>
+                                <img src="./images/exit_game.png" style="width: 40%">
+                            </td> 
+                            <td>
+                                <img src="./images/lost.gif" style="width: 40%">
+                            </td>   
+                            <td>
+                            <img src="./images/play_again.png" style="width: 40%">
+                            </td>
+                        </tr>   
+                    </table>                    
+                </div>
+                <div id="d4">
+                    Select Player
+                </div>
+                <div id="d5">
+                    Create player
+                </div>
+              
+        <!-- <br>        
         <br>   
         <div id="textform">Input your name:</div>
         <div id="playagain" style="visibility:hidden">Play again?</div>
@@ -63,6 +100,6 @@
                 >No</a>
         </div>          
         <div class="tab blink" id="response"></div>        
-        <div style="visibility:hidden" id="idplayer"></div>
+        <div style="visibility:hidden" id="idplayer"></div> -->
 </body>
 </html>
