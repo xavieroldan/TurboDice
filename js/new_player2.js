@@ -78,11 +78,14 @@ function newplayer(){
             //Load the options
             var rows= document.getElementById("table1").rows[0].cells;
             //Exit            
-            rows[0].innerHTML = "<a id='link' title='hello' href='./index2.html'><img src='./images/exit_game.png' style='width: 40%'></a>";
+            rows[0].innerHTML = 
+            "<a id='link' title='hello' href='./index2.html'><img src='./images/exit_game.png' alt='penguin' style='width: 30%'></a>";
             //Void
-            rows[1].innerHTML = "<br>";
+            rows[1].innerHTML = 
+            "<img src='./images/happy.gif' alt='penguin' style='width:50%'>";
             //Play game
-            rows[2].innerHTML = "<a id='link' title='hello' href='javascript:playgame();' onclick='playgame(); return false'><img src='./images/play_again.png' style='width: 40%'></a>";
+            rows[2].innerHTML = 
+            "<a id='link' title='hello' href='javascript:playgame();' onclick='playgame(); return false'><img src='./images/play_again.png' alt='penguin' style='width: 30%'></a>";
         }
     else {
         response.innerHTML = output; 
@@ -141,13 +144,13 @@ function playgame()
                 if(winner)
                 {
                     //Wins
-                    output= "<br><p>"+name+".<p>You win!</p>";
+                    output= "<br><p>"+name+":<p>You win!</p>";
                     penguin="./images/happy.gif"
                 }
                 else
                 {
                     //Lost
-                    output= "<br><p>"+name+".<p>You lost!</p>";
+                    output= "<br><p>"+name+":<p>You lost!</p>";
                     penguin="./images/lost.gif"
                 }
                 //Add the dice results
@@ -174,9 +177,9 @@ function playgame()
                             output = "<br><p>Communications error:</p><p>try later</p>";
                     }
             }            
-    }); 
+    });   
     //Change the output text
     response.innerHTML = output; 
     //Change the penguin image
-    rows[1].innerHTML = "<img src='"+penguin+"' style='width: 40%'>";
-}
+    rows[1].innerHTML = "<img src='"+penguin+"' style='width: 50%'>";
+}  
