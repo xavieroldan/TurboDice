@@ -33,7 +33,7 @@
     
   a.arcade{
     onmouseover="this.style.color='#FF4500'"
-    onmouseout="this.style.color='white'" 
+    onmouseout ="this.style.color='white'"; 
   }  
     
 .blink {
