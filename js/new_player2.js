@@ -25,7 +25,7 @@ function newplayer(){
 
     var textInput= document.getElementById("d1");
     var form = document.getElementById("d2");
-    var response = document.getElementById("d3");
+    var response = document.getElementById("d4");
     
     var myObj = { name : null }; 
     var name= document.getElementById("newname").value;
@@ -76,8 +76,13 @@ function newplayer(){
             response.innerHTML = output; 
             form.innerHTML ="";
             //Load the options
-            var table1= document.getElementById("d3")
-            document.innerHTML= "";// Cargar los botones de exit o play aquí
+            var rows= document.getElementById("table1").rows[0].cells;
+            //Exit            
+            rows[0].innerHTML = "<a id='link' title='hello' href='./index2.html'><img src='./images/exit_game.png' style='width: 40%'></a>";
+            //Void
+            rows[1].innerHTML = "<br>";
+            //Play game
+            rows[2].innerHTML = "<a id='link' title='hello' href='javascript:playgame();' onclick='playgame(); return false'><img src='./images/play_again.png' style='width: 40%'></a>";
         }
     else {
         response.innerHTML = output; 
@@ -90,12 +95,16 @@ function newplayer(){
 function playgame()
 {
     //Get the player Id
-    var idPlayer = document.getElementById("idplayer").textContent;
+    var idPlayer = document.getElementById("id_player").textContent;
+
+    var rows= document.getElementById("table1").rows[0].cells;
+    var response = document.getElementById("d4");
     var name ="XD"; 
     var dices = new Array(); 
     var resultTxt= "Results: ";   
     var winner = false;
     var played = false;
+    var penguin = "XD";
 
     //Play the game
     var played = false;
@@ -132,12 +141,14 @@ function playgame()
                 if(winner)
                 {
                     //Wins
-                    output= name+".You wins!";
+                    output= "<br><p>"+name+".<p>You win!</p>";
+                    penguin="./images/happy.gif"
                 }
                 else
                 {
                     //Lost
-                    output= name+".You lost.";
+                    output= "<br><p>"+name+".<p>You lost!</p>";
+                    penguin="./images/lost.gif"
                 }
                 //Add the dice results
                 dices.forEach(function(result) 
@@ -145,7 +156,7 @@ function playgame()
                        resultTxt += result+" ";
                     });
                 //Add the dices results
-                output= output+"\n"+resultTxt;
+                output= output+"<p>"+resultTxt+"</p>";
                 played=true;                        
             },
         error: function(xhr, ajaxOptions, thrownError)
@@ -154,21 +165,18 @@ function playgame()
                 switch (xhr.status) 
                     {
                         case 409 : 
-                            output = "No fue posible localizar el jugador:"+name;
+                            output = "<br><p>It was not possible to locate the player "+name+"</p>";
                             break;
                         case 404 :
-                            output = "No se pudo realizar la jugada. Error 404" ;
+                            output = "<br><p>Unable to play</p>Error 404<p></p>" ;
                             break;  
                         default:   
-                            output = "Communications error, try later";
+                            output = "<br><p>Communications error:</p><p>try later</p>";
                     }
             }            
     }); 
-    alert(output);
-    //Play again?
-    alert("Estoy en la nueva página");
-    document.getElementById("playagain").style.visibility ="visible";
-    document.getElementById("playyes").style.visibility ="visible";
-    document.getElementById("playno").style.visibility ="visible";
-    document.getElementById("play").style.visibility ="hidden";
+    //Change the output text
+    response.innerHTML = output; 
+    //Change the penguin image
+    rows[1].innerHTML = "<img src='"+penguin+"' style='width: 40%'>";
 }
