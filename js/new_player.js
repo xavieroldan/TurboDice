@@ -1,4 +1,6 @@
 var idPlayer="";
+var urlServer="http://localhost:8080/";
+
 //Create a new player
 //✧*｡٩(ˊᗜˋ*)و✧*｡   
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -15,7 +17,7 @@ function newplayer(){
     var created=false;    
     $.ajax
             ({
-        url: 'http://localhost:8080/players',
+        url: urlServer+'players',
         type: 'POST',
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(myObj),
@@ -87,7 +89,7 @@ function playgame()
     var played = false;
     $.ajax
     ({
-        url: "http://localhost:8080/players/"+idPlayer+"/games/",
+        url: urlServer+'players/'+idPlayer+"/games/",
         type: 'POST',
         async: false,
         cache: false,
@@ -118,13 +120,15 @@ function playgame()
                 if(winner)
                 {
                     //Wins
-                    output= "<br><p>"+name+":<p class='blinky'>You win!</p>";
+                    // output= "<p>"+name+":<p class='blinky'>You win!</p>";
+                    output= "<p class='blinky'>You win!</p>";
                     penguin="./images/happy.gif"
                 }
                 else
                 {
                     //Lost
-                    output= "<br><p>"+name+"<p class='blinkr'>You lost!</p>";
+                    // output= "<p>"+name+"<p class='blinkr'>You lost!</p>";
+                    output= "<p class='blinkr'>You lost!</p>";
                     penguin="./images/cry.gif"
                 }
                 //Add the dice results
@@ -133,7 +137,7 @@ function playgame()
                        resultTxt += result+" ";
                     });
                 //Add the dices results
-                output= output+"<p class='blink'>"+resultTxt+"</p>";
+                output+="<p>"+resultTxt+"</p>";
                 played=true;                        
             },
         error: function(xhr, ajaxOptions, thrownError)
@@ -142,13 +146,13 @@ function playgame()
                 switch (xhr.status) 
                     {
                         case 409 : 
-                            output = "<br><p class='blinkr'>It was not possible to locate the player "+name+"</p>";
+                            output = "<p class='blinkr'>It was not possible to locate the player "+name+"</p>";
                             break;
                         case 404 :
-                            output = "<br><p class='blinkr'>Unable to play</p class='blinkr'>Error 404<p></p>" ;
+                            output = "<p class='blinkr'>Unable to play</p class='blinkr'>Error 404<p></p>" ;
                             break;  
                         default:   
-                            output = "<br ><p class='blinkr'>Communications error:</p><p class='blinkr'>try later</p>";
+                            output = "<p class='blinkr'>Communications error:</p><p class='blinkr'>try later</p>";
                     }
             }            
     });   
@@ -166,7 +170,7 @@ function getall(){
         }
     alert("Enviado el GET");
 
-    fetch('http://localhost:8080/getall', options).then(response => {
+    fetch(urlServer+'getall', options).then(response => {
         document.getElementById("incoming").innerHTML = response
         }).catch(error => console.error(error))
 }

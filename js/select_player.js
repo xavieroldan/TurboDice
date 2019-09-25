@@ -102,7 +102,7 @@ function submenu(){
     var deletePlayer= document.getElementById("d3");
     var play= document.getElementById("d4");
     
-    editName.innerHTML="<br>"+"<a href='#' onclick='#' onmouseover='this.style.color='#FF4500'' onmouseout='this.style.color='white'' >Edit name</a>";
+    editName.innerHTML="<a href='#' onclick='#' onmouseover='this.style.color='#FF4500'' onmouseout='this.style.color='white'' >Edit name</a>";
     deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
     play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
@@ -115,14 +115,13 @@ function deletePlayer(){
     var yesOption= document.getElementById("d3");
     var NoOption= document.getElementById("d4");
     
-    alertText.innerHTML="<p>Confirm delete "+myPlayer.name+", please</p>";
+    alertText.innerHTML="<p>Confirm delete, please</p>";
     NoOption.innerHTML="<br><a href='javascript:submenu();' >No</a>";
     yesOption.innerHTML="<a href='javascript:del();' >Yes</a>";
 }
 
 //Delete call
 function del(){
-        alert("Estoy aquí:"+urlRequest);
         var isDeleted = false;
         $.ajax
         ({
