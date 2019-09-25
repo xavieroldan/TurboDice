@@ -1,3 +1,4 @@
+var idPlayer="";
 //Create a new player
 //✧*｡٩(ˊᗜˋ*)و✧*｡   
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -23,10 +24,9 @@ function newplayer(){
         processData: false,  
         success: function(data)
                     {                        
-                        //save the idPlayer value into the page
-                        textInput.innerHTML = "<br>";
-                        var idPlayer = document.getElementById("id_player");
-                        idPlayer.innerHTML = data.idPlayer;
+                        //save the idPlayer value 
+                        textInput.innerHTML = "<br>";                        
+                        idPlayer= data.idPlayer;
                         
                         //Change the return message
                         output="<p class='blinky'> Created player "+name+"</p>";
@@ -74,9 +74,6 @@ function newplayer(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function playgame()
 {
-    //Get the player Id
-    var idPlayer = document.getElementById("id_player").textContent;
-
     var rows= document.getElementById("table1").rows[0].cells;
     var response = document.getElementById("d4");
     var name ="XD"; 
