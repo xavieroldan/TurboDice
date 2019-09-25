@@ -17,21 +17,16 @@ function getall(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function newplayer(){
 
-    // var resp = document.getElementById("response"); // Set the response text to void
-    // var play = document.getElementById("play");//Get the the play link element
-    // resp.innerHTML =""; 
-    // resp.style.color="#FF4500";     
-    // play.style.visibility="hidden";   
-
-    var textInput= document.getElementById("d1");
-    var form = document.getElementById("d2");
-    var response = document.getElementById("d4");
-    
+    var resp = document.getElementById("response"); // Set the response text to void
+    var play = document.getElementById("play");//Get the the play link element
+    resp.innerHTML =""; 
+    resp.style.color="#FF4500";     
+    play.style.visibility="hidden";
     var myObj = { name : null }; 
     var name= document.getElementById("newname").value;
     myObj.name = name;
     var output="XD"; 
-    var created=false;    
+    var created=false;
     $.ajax
             ({
         url: 'http://localhost:8080/players',
@@ -44,52 +39,39 @@ function newplayer(){
         success: function(data)
                     {                        
                         //save the idPlayer value into the page
-                        textInput.innerHTML = "<br>";
-                        var idPlayer = document.getElementById("id_player");
+                        var idPlayer = document.getElementById("idplayer");
                         idPlayer.innerHTML = data.idPlayer;
                         
                         //Change the return message
-                        output="</p>Created player "+name+"</p>";
+                        output="Created player "+name;
                         created=true;                        
                     },
         error: function(xhr, ajaxOptions, thrownError)
                     {                        
-                        textInput.innerHTML = "<br>";
                         created = false;
                         switch (xhr.status) 
                             {
                                 case 409 : 
-                                    output = "<p >The player already exists:</p><p>try again</p>";
+                                    output = "The player already exists, try again";
                                     break;
                                 case 401 : 
-                                    output = "</p >The name is empty:</p><p>try again</p>";
+                                    output = "The name is empty, try again";
                                     break;
                                 default:   
-                                    output = "</p >Communications error:</p><p>try later</p>"
+                                    output = "Communications error, try later"
                             }
                     }        
             }); 
-
     if(created) 
         {
-            //Message player displayed
-            response.innerHTML = output; 
-            form.innerHTML ="";
-            //Load the options
-            var rows= document.getElementById("table1").rows[0].cells;
-            //Exit            
-            rows[0].innerHTML = 
-            "<a id='link' title='hello' href='./index2.html'><img src='./images/exit_game.png' alt='penguin' style='width: 30%'></a>";
-            //Void
-            rows[1].innerHTML = 
-            "<img src='./images/happy.gif' alt='penguin' style='width:50%'>";
-            //Play game
-            rows[2].innerHTML = 
-            "<a id='link' title='hello' href='javascript:playgame();' onclick='playgame(); return false'><img src='./images/play_again.png' alt='penguin' style='width: 30%'></a>";
+            play.style.visibility ="visible";
+            play.style.color="#FF4500";
+            document.getElementById("nameform").style.visibility ="hidden";  
+            document.getElementById("textform").style.visibility ="hidden"; 
         }
-    else {
-        response.innerHTML = output; 
-        }         
+    else       
+    resp.innerHTML = output; 
+
     return output;                             
 }
 
@@ -98,16 +80,12 @@ function newplayer(){
 function playgame()
 {
     //Get the player Id
-    var idPlayer = document.getElementById("id_player").textContent;
-
-    var rows= document.getElementById("table1").rows[0].cells;
-    var response = document.getElementById("d4");
+    var idPlayer = document.getElementById("idplayer").textContent;
     var name ="XD"; 
     var dices = new Array(); 
     var resultTxt= "Results: ";   
     var winner = false;
     var played = false;
-    var penguin = "XD";
 
     //Play the game
     var played = false;
@@ -144,14 +122,12 @@ function playgame()
                 if(winner)
                 {
                     //Wins
-                    output= "<br><p>"+name+":<p>You win!</p>";
-                    penguin="./images/happy.gif"
+                    output= name+".You wins!";
                 }
                 else
                 {
                     //Lost
-                    output= "<br><p>"+name+":<p>You lost!</p>";
-                    penguin="./images/lost.gif"
+                    output= name+".You lost.";
                 }
                 //Add the dice results
                 dices.forEach(function(result) 
@@ -159,7 +135,7 @@ function playgame()
                        resultTxt += result+" ";
                     });
                 //Add the dices results
-                output= output+"<p>"+resultTxt+"</p>";
+                output= output+"\n"+resultTxt;
                 played=true;                        
             },
         error: function(xhr, ajaxOptions, thrownError)
@@ -168,18 +144,21 @@ function playgame()
                 switch (xhr.status) 
                     {
                         case 409 : 
-                            output = "<br><p>It was not possible to locate the player "+name+"</p>";
+                            output = "No fue posible localizar el jugador:"+name;
                             break;
                         case 404 :
-                            output = "<br><p>Unable to play</p>Error 404<p></p>" ;
+                            output = "No se pudo realizar la jugada. Error 404" ;
                             break;  
                         default:   
-                            output = "<br><p>Communications error:</p><p>try later</p>";
+                            output = "Communications error, try later";
                     }
             }            
-    });   
-    //Change the output text
-    response.innerHTML = output; 
-    //Change the penguin image
-    rows[1].innerHTML = "<img src='"+penguin+"' style='width: 50%'>";
-}  
+    }); 
+    alert(output);
+    //Play again?
+    alert("Estoy en la nueva página");
+    document.getElementById("playagain").style.visibility ="visible";
+    document.getElementById("playyes").style.visibility ="visible";
+    document.getElementById("playno").style.visibility ="visible";
+    document.getElementById("play").style.visibility ="hidden";
+}

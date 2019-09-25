@@ -11,58 +11,47 @@
     <title>Turbo Dice</title>
     <link rel="shortcut icon" href="favicon.ico">
 </head>
-<body id="grad1">    
+<body>    
         <h1>
-            <div>
-                <img src="./images/diceAnim.gif" alt="dice" style="width:10%;height:10%;">
-                <a href="./index.html" style="font-size: 4vw;"
+                <img src="./images/diceAnim.gif" alt="dice" class='hidemob'>
+                <a href="./index.html" 
                 onmouseover="this.style.color='#FF4500'"
                 onmouseout="this.style.color='white'" 
                 >Turbo Dice</a>
-                <img src="./images/dice2Anim.gif" alt="dice" style="width:10%;height:10%;">
-            </div> 
-            </h1>   
-        <br>        
-        <br>   
-        <div id="textform">Input your name:</div>
-        <div id="playagain" style="visibility:hidden">Play again?</div>
-        <br>
-        <form id="nameform" onsubmit="return newplayer()" action="javascript:void(0);">
-                <label for="name"> 
-                    <div>
-                        <input 
-                        id="newname" 
-                        name="playername" 
-                        required="true" 
-                        maxlength="15" 
-                        size="15" 
-                        type="text" 
-                        value="" />
-                    </div>                                       
-                </label> 
-        </form>
-        <div class="tab blink" > 
-                <a id="play" href="#" 
-                style="visibility: hidden" 
-                onmouseover="this.style.color='#FF4500'"
-                onmouseout="this.style.color='#FF4500'"
-                onclick="return playgame()"
-                >Play game</button> 
-            </div>   
-        <div id="playyes" style="visibility:hidden">
-                <a href="#" 
-                onmouseover="this.style.color='#FF4500'"
-                onmouseout="this.style.color='white'" 
-                onclick="return playgame()";
-                >Yes</a>
-        </div>
-        <div id="playno" style="visibility:hidden">
-                <a href="./index.html"
-                onmouseover="this.style.color='#FF4500'"
-                onmouseout="this.style.color='white'" 
-                >No</a>
-        </div>          
-        <div class="tab blink" id="response"></div>        
-        <div style="visibility:hidden" id="idplayer"></div>
+                <img src="./images/dice2Anim.gif" alt="dice" class='hidemob'>
+            </h1> 
+                <div id="d1">
+                    <br>
+                    Input new name
+                </div>
+                <div id="d2" >
+                    <br>
+                        <form id="nameform" onsubmit="return newplayer()" action="javascript:void(0);">
+                            <input 
+                                id="newname"
+                                required="true" 
+                                maxlength="15" 
+                                size="15" 
+                                type="text" 
+                                value=""
+                                autofocus 
+                                />  
+                        </form>
+                </div>
+                <div id="d3">
+                    <table id="table1" style="width: 100%">
+                        <tr>
+                            <td class="thirtythree"> </td>                             
+                            <td class="thirtythree"> </td>                              
+                            <td class="thirtythree"> </td>
+                        </tr>   
+                    </table>                    
+                </div>
+                <div id="d4">
+                </div>
+                <div id="d5">
+                </div>
+                <!-- Hidden text to safe variables -->
+                <div id="id_player" style="visibility:hidden"> </div>
 </body>
 </html>
