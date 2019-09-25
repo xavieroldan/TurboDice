@@ -11,13 +11,10 @@
     <title >Turbo Dice</title>
     <link rel="shortcut icon" href="favicon.ico">
 </head>
-<body onload="radioList()">
+<body onload="generateList()">
         <h1>
             <img src="./images/diceAnim.gif" alt="dice" class='hidemob'>
-            <a href="./index.html"
-            onmouseover="this.style.color='#FF4500'"
-            onmouseout="this.style.color='white'"             
-            >Turbo Dice</a>
+            <a href="./index.html">Turbo Dice</a>
             <img src="./images/dice2Anim.gif" alt="dice" class='hidemob'>
         </h1>         
         <br>
@@ -26,11 +23,12 @@
         <br>    
         <br>   
         <br>           
-        <div id="info">
+        <div id="d1">
                 <p>Select one player</p>
-                <!-- <a href="javascript:radioList();" onclick="radioList();">Go</a> -->
         </div>  
-        <div id="player_list">
-        </div>     
+        <div id="d2"></div>
+        <div id="d3"></div>
+        <div id="d4"></div>
+
 </body>
 </html>

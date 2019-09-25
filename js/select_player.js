@@ -1,25 +1,25 @@
 
 var urlServer="http://localhost:8080/";
-var idPlayer = null;
+var myPlayer = { name : null, idPlayer : null};
+var urlRequest = "";
 
 
 
 //Radio list of all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function radioList(){ 
+function generateList(){ 
 
     var playersList = new Array();
     var nameList = new Array();
     var urlHeader = urlServer+"getall";
-    var myPlayer = { name : null, idPlayer : null};
+    var isPlayerSet= false;    
     //Getting the list player's names 
     $.ajax
         ({
         url: urlHeader,
         type: 'GET',
-        contentType: "application/json; charset=utf-8",
-        
-        async: false,
+        contentType: "application/json; charset=utf-8",        
+        async: true,
         cache: false,
         processData: false,  
         success: function(data)
@@ -44,7 +44,7 @@ function radioList(){
                         selectList+="</select>";
 
                     //Output the list
-                    var printList = document.getElementById("player_list") ;
+                    var printList = document.getElementById("d2") ;
                     printList.innerHTML = selectList;
 
                     //Detect the selected player
@@ -54,47 +54,119 @@ function radioList(){
                     document.getElementById("select_list").addEventListener("change",
                         function(){                            
                             nameTried = o.options[o.selectedIndex].value;
-                            alert("Elegido:"+nameTried);
-                                //Set the player object
+                            //Set the player object
                             myPlayer.name=nameTried;
                             playersList.forEach(
                                 function(player)
                                 {                               
                                     if(player.name==nameTried)
                                     {
+                                        //Go to the submenu
                                         myPlayer.idPlayer=player.idPlayer;
-                                        alert(myPlayer.name+":"+myPlayer.idPlayer);
+                                        isPlayerSet=true;
+                                        if(isPlayerSet==true){submenu();}   
                                     }
                                 }
                             )
                         });
-                        
-                    
-
-
-
-
                 },
         error: function(xhr, ajaxOptions, thrownError)
                 {                        
+                    var errorMsg="";
                     switch (xhr.status) 
                         {
-                            case 409 : 
-                                alert("Error 409");
+                            case 409 :
+                                errorMsg="Error 409";
                                 break;
                             default:   
-                                alert("Error "+xhr.status);
+                                errorMsg="Error comunications("+xhr.status+")";
                         }
+                    
+                    document.getElementById("d3").innerHTML="<p class='blinkr'>"+errorMsg+"</p>";
                 }        
-        }); 
-
-
-        
-
-
-
-
+        });           
     }
+
+//Submenu select player
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+function submenu(){
+    
+    //Generate the submenu
+    //Header
+    var nameText = document.getElementById("d1");
+    nameText.innerHTML="<p class='blinky'>Player "+myPlayer.name+" selected</p><br>";
+
+    //Options
+    var editName= document.getElementById("d2");
+    var deletePlayer= document.getElementById("d3");
+    var play= document.getElementById("d4");
+    
+    editName.innerHTML="<br>"+"<a href='#' onclick='#' onmouseover='this.style.color='#FF4500'' onmouseout='this.style.color='white'' >Edit name</a>";
+    deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
+    play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
+}
+
+//Delete player
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function deletePlayer(){
+    urlRequest=urlServer+"players/"+myPlayer.idPlayer;
+    var alertText = document.getElementById("d2");
+    var yesOption= document.getElementById("d3");
+    var NoOption= document.getElementById("d4");
+    
+    alertText.innerHTML="<p>Confirm delete "+myPlayer.name+", please</p>";
+    NoOption.innerHTML="<br><a href='javascript:submenu();' >No</a>";
+    yesOption.innerHTML="<a href='javascript:del();' >Yes</a>";
+}
+
+//Delete call
+function del(){
+        alert("Estoy aquí:"+urlRequest);
+        var isDeleted = false;
+        $.ajax
+        ({
+                url: urlRequest,
+                type: 'DELETE', 
+                async: false,
+                cache: false, 
+                processData: false,               
+                contentType: "application/json; charset=utf-8",
+                dataType: "json", 
+                  success: function(data)
+                      {
+                      alert("Data Deleted: " + data);
+                      },
+                  error: function(xhr, ajaxOptions, thrownError)
+                     {
+                         var errorMsg="";
+                          switch (xhr.status) 
+                          {                            
+                            case 200 :
+                                isDeleted=true;//Generate error on deleted
+                                  break;
+                              default:   
+                                 errorMsg="Error comunications("+xhr.status+")";                          
+                          }
+                          document.getElementById("d1").innerHTML="";
+                          document.getElementById("d2").innerHTML="";
+                          document.getElementById("d3").innerHTML="<p class='blinkr'>"+errorMsg+"</p>";
+                          document.getElementById("d4").innerHTML="";
+                      }
+              });
+        if(isDeleted)
+            {
+                window.open("./index.html","_self");
+            }
+        else
+            {
+                generateList();
+            }
+}
+
+//Rename player
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 
 //Get all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -55,6 +55,10 @@ a:link{
   2px 0 0 #91fcfe,
   4px 0 0 #4405fc
  }
+
+ a:hover{
+  color: #FF4500;
+}
 /* <select> style */
   select{
     font-family: 'Press Start 2P', cursive; 
@@ -318,6 +322,8 @@ body {
     }
 
   }
+
+
 
   
   
