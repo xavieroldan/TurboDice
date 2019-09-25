@@ -55,6 +55,11 @@ a:link{
   2px 0 0 #91fcfe,
   4px 0 0 #4405fc
  }
+/* <select> style */
+  select{
+    font-family: 'Press Start 2P', cursive; 
+    font-size:3vw;  
+  }
 
 /* Background style */
 body {
@@ -275,28 +280,29 @@ body {
   /* tables */
   table {
     width:100%;
-}
-thead {
-    display: none;
-}
-tr:nth-of-type(2n) {
-    background-color: inherit;
-}
-tr td:first-child {
-    font-weight:bold;
-    font-size:1.3em;
-}
-tbody td {
-    display: block;
-    text-align:center;
-}
-tbody td:before {
-    content: attr(data-th);
-    display: block;
-    text-align:center;
-}
-}
-}
+    }
+    thead {
+        display: none;
+    }
+    tr:nth-of-type(2n) {
+        background-color: inherit;
+    }
+    tr td:first-child {
+        font-weight:bold;
+        font-size:1.3em;
+    }
+    tbody td {
+        display: block;
+        text-align:center;
+    }
+    tbody td:before {
+        content: attr(data-th);
+        display: block;
+        text-align:center;
+    }
+  }
+
+
   /* monitor wide */
   @media screen and (min-width: 600px) {
     .responsive {
