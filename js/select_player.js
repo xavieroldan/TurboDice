@@ -179,10 +179,10 @@ function renamePlayer(){
     //TODO: get the new name and full the myObjt with the new name  
 
     
-    //TODO: chek the query: error with generateList() . The variable urlRequest? The 
+    
     $.ajax
     ({            
-        url= urlRequest,
+        url: urlRequest,
         type:"PUT",
         async: true,
         cache: false, 
