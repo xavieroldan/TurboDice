@@ -102,7 +102,7 @@ function submenu(){
     var deletePlayer= document.getElementById("d3");
     var play= document.getElementById("d4");
     
-    editName.innerHTML="<a href='#' onclick='#' onmouseover='this.style.color='#FF4500'' onmouseout='this.style.color='white'' >Edit name</a>";
+    editName.innerHTML="<a href='#' href='javascript:renamePlayer();'>Rename player</a>";
     deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
     play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
@@ -166,6 +166,54 @@ function del(){
 //Rename player
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+
+function renamePlayer()
+{
+    var isRenamed= false;
+    var myObj = { name : null, idPlayer : null };
+    urlRequest=urlServer+"players/";
+    //TODO: Set a form to receive the new name
+    
+    
+    
+    myObj.idPlayer= myPlayer.idPlayer; //Set the id
+    //TODO: get the new name and full the myObjt with the new name  
+
+    
+
+    $.ajax
+    ({
+            
+        url= urlRequest,
+        type:"PUT",
+        async: true,
+        cache: false, 
+        processData: false,               
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(myObj),
+        // dataType: "json", 
+            success:function(data)
+            {
+                //TODO: confirm the rename and exit menu
+                alert(data)
+            },
+            error:function(xhr, ajaxOptions, thrownError)
+            {
+                //TODO: control the errors to exit the correct message and end  
+                var errorMsg=""; 
+                switch (xhr.status) 
+                {                            
+                    case 200 :
+                        alert("200")
+                        isDeleted=true;//Generate error on deleted and return to the form again to put the new name
+                        break;
+                    default:                         
+                        errorMsg="Error comunications("+xhr.status+")";
+                        alert(errorMsg);                      
+                }
+            }
+    });
+}
 
 //Get all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

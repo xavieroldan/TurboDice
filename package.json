@@ -1,0 +1,28 @@
+{
+  "name": "turbo_dice",
+  "version": "1.0.0",
+  "description": "A simple dice game. Winner is the number 7! Project done with JAVA, Spring, Hibernate, MySql, HTML, CSS and JavaScript tecnologies. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xavieroldan/TurboDice.git"
+  },
+  "author": "Xavier Roldan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xavieroldan/TurboDice/issues"
+  },
+  "homepage": "https://github.com/xavieroldan/TurboDice#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^6.1.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.2"
+  }
+}
