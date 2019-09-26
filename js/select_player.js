@@ -102,7 +102,7 @@ function submenu(){
     var deletePlayer= document.getElementById("d3");
     var play= document.getElementById("d4");
     
-    editName.innerHTML="<a href='#' href='javascript:renamePlayer();'>Rename player</a>";
+    // editName.innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
     deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
     play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
@@ -167,8 +167,7 @@ function del(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-function renamePlayer()
-{
+function renamePlayer(){
     var isRenamed= false;
     var myObj = { name : null, idPlayer : null };
     urlRequest=urlServer+"players/";
@@ -180,10 +179,9 @@ function renamePlayer()
     //TODO: get the new name and full the myObjt with the new name  
 
     
-
+    //TODO: chek the query: error with generateList() . The variable urlRequest? The 
     $.ajax
-    ({
-            
+    ({            
         url= urlRequest,
         type:"PUT",
         async: true,
@@ -191,7 +189,7 @@ function renamePlayer()
         processData: false,               
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(myObj),
-        // dataType: "json", 
+        dataType: "json", 
             success:function(data)
             {
                 //TODO: confirm the rename and exit menu
