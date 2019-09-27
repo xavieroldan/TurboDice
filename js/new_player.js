@@ -64,7 +64,7 @@ function newplayer(){
             "<img src='./images/happy.gif' alt='penguin' class='responsive'>";
             //Play game
             rows[2].innerHTML = 
-            "<a id='link' title='hello' href='javascript:playgame();' onclick='playgame(); return false'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
+            "<a id='link' title='hello' href='javascript:playgame();'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
         }
     else {
         response.innerHTML = output; 

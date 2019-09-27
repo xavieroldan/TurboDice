@@ -111,13 +111,13 @@ function submenu(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function deletePlayer(){
     urlRequest=urlServer+"players/"+myPlayer.idPlayer;
-    var alertText = document.getElementById("d2");
-    var yesOption= document.getElementById("d3");
-    var NoOption= document.getElementById("d4");
+    var d2Text = document.getElementById("d2");
+    var d3Text= document.getElementById("d3");
+    var d4Text= document.getElementById("d4");
     
-    alertText.innerHTML="<p>Confirm delete, please</p>";
-    NoOption.innerHTML="<br><a href='javascript:submenu();' >No</a>";
-    yesOption.innerHTML="<a href='javascript:del();' >Yes</a>";
+    d2Text.innerHTML="<p>Confirm delete, please</p>";
+    d4Text.innerHTML="<br><a href='javascript:submenu();' >No</a>";
+    d3Text.innerHTML="<a href='javascript:del();' >Yes</a>";
 }
 
 //Delete call
@@ -134,6 +134,7 @@ function del(){
                 dataType: "json", 
                   success: function(data)
                       {
+                          //
                       alert("Data Deleted: " + data);
                       },
                   error: function(xhr, ajaxOptions, thrownError)
@@ -142,20 +143,25 @@ function del(){
                           switch (xhr.status) 
                           {                            
                             case 200 :
-                                isDeleted=true;//Generate error on deleted
-                                  break;
-                              default:   
-                                 errorMsg="Error comunications("+xhr.status+")";                          
-                          }
-                          document.getElementById("d1").innerHTML="";
-                          document.getElementById("d2").innerHTML="";
-                          document.getElementById("d3").innerHTML="<p class='blinkr'>"+errorMsg+"</p>";
-                          document.getElementById("d4").innerHTML="";
+                                isDeleted=true;//TODO: Solve the generate error on deleted
+                                break;
+
+                            default:   
+                                 errorMsg="Error comunications("+xhr.status+")";
+                                 document.getElementById("d1").innerHTML="";
+                                 document.getElementById("d2").innerHTML="";
+                                 document.getElementById("d3").innerHTML="<p class='blinkr'>"+errorMsg+"</p>";
+                                 document.getElementById("d4").innerHTML="";                          
+                          }                          
                       }
+
               });
         if(isDeleted)
             {
-                window.open("./index.html","_self");
+                document.getElementById("d1").innerHTML= "<p class='blinky'>Player deleted</p>";
+                document.getElementById("d2").innerHTML= "<br><a href='./index.html'>Exit</a>"; 
+                document.getElementById("d3").innerHTML= "";
+                document.getElementById("d4").innerHTML= "";
             }
         else
             {
@@ -181,56 +187,62 @@ function renamePlayer(){
     var d4= document.getElementById("d4");
     
     d1Text.innerHTML = "<p>Input new name</p>";
-    d2Text.innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''autofocus/></form>"
+    d2Text.innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''/></form>"
     d3.innerHTML="";
-    d4.innerHTML="";  
+    d4.innerHTML=""; 
+    document.getElementById('newname').focus();
     }
-
- // Setting the name (PUT)   
-    function setNewName(){        
     
-        //Get the new name and full the object with the new name 
-        var newName = document.getElementById("newname").value ;
-        editedPlayer.name = newName;
-        
-        //Make the put request
-        $.ajax
-        ({            
-        url: urlRequest,
-        type:"PUT",
-        async: false,
-        cache: false, 
-        processData: false,               
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(editedPlayer),
-        dataType: "json", 
-            success:function(data)
-            {
-                //TODO: confirm the rename and exit menu
-                alert(data)
-            },
-            error:function(xhr, ajaxOptions, thrownError)
-            {
-                //TODO: control the errors to exit the correct message and end  
-                var errorMsg=""; 
-                switch (xhr.status) 
-                {                            
-                    case 200 :
-                        alert("200")
-                        isDeleted=true;//Generate error on deleted and return to the form again to put the new name
-                        break;
-                    default:                         
-                        errorMsg="Error comunications("+xhr.status+")";
-                        alert(errorMsg);                      
-                }
+
+ // Setting the name (PUT)
+ function setNewName(){        
+    
+    //Get the new name and full the object with the new name 
+    var newName = document.getElementById("newname").value ;
+    editedPlayer.name = newName;
+    
+    //Make the put request
+    $.ajax
+    ({            
+    url: urlRequest,
+    type:"PUT",
+    async: true,
+    cache: false, 
+    processData: false,               
+    contentType: "application/json; charset=utf-8",
+    data: JSON.stringify(editedPlayer),
+    dataType: "json", 
+        success:function(data)
+        {
+            //Confirm the rename and exit menu
+            var d1Text = document.getElementById("d1");
+            var d2Text = document.getElementById("d2");                
+
+            d1Text.innerHTML = "<p class='blinky'>Name changed</p>";
+            d2Text.innerHTML = "<br><a href='./index.html'>Exit</a>" 
+        },
+        error:function(xhr, ajaxOptions, thrownError)
+        {
+            //TODO: control the errors to exit the correct message and end  
+            var output="XD"; 
+            switch (xhr.status) 
+            {                            
+                case 409 :
+                    //Duplicated name
+                    output="The '"+editedPlayer.name+"' name already exists."
+                    break;
+                default:   
+                    output = "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>"
             }
-    });    
-    }
+            var d1Text = document.getElementById("d1");
+            var d2Text = document.getElementById("d2");                
 
-    
-    
-    
+            d1Text.innerHTML = "<p class='blinkr'>"+output+"</p>";
+            d2Text.innerHTML = "<br><a href='javascript:renamePlayer();'>Try again</a>" 
 
+        }
+});    
+}
 
 //Get all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
