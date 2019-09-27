@@ -102,7 +102,7 @@ function submenu(){
     var deletePlayer= document.getElementById("d3");
     var play= document.getElementById("d4");
     
-    // editName.innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
+    editName.innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
     deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
     play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
@@ -166,29 +166,43 @@ function del(){
 //Rename player
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
+//Set the menu and get the
+var editedPlayer = { name : null, idPlayer : null };
 
 function renamePlayer(){
-    var isRenamed= false;
-    var myObj = { name : null, idPlayer : null };
-    urlRequest=urlServer+"players/";
-    //TODO: Set a form to receive the new name
     
-    
-    
-    myObj.idPlayer= myPlayer.idPlayer; //Set the id
-    //TODO: get the new name and full the myObjt with the new name  
+    urlRequest=urlServer+"players/";//set the url call
+    editedPlayer.idPlayer= myPlayer.idPlayer; //Set the id
 
+    // Set a form to receive the new name
+    var d1Text = document.getElementById("d1");
+    var d2Text = document.getElementById("d2");
+    var d3= document.getElementById("d3");
+    var d4= document.getElementById("d4");
     
+    d1Text.innerHTML = "<p>Input new name</p>";
+    d2Text.innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''autofocus/></form>"
+    d3.innerHTML="";
+    d4.innerHTML="";  
+    }
+
+ // Setting the name (PUT)   
+    function setNewName(){        
     
-    $.ajax
-    ({            
+        //Get the new name and full the object with the new name 
+        var newName = document.getElementById("newname").value ;
+        editedPlayer.name = newName;
+        
+        //Make the put request
+        $.ajax
+        ({            
         url: urlRequest,
         type:"PUT",
-        async: true,
+        async: false,
         cache: false, 
         processData: false,               
         contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(myObj),
+        data: JSON.stringify(editedPlayer),
         dataType: "json", 
             success:function(data)
             {
@@ -210,8 +224,13 @@ function renamePlayer(){
                         alert(errorMsg);                      
                 }
             }
-    });
-}
+    });    
+    }
+
+    
+    
+    
+
 
 //Get all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
