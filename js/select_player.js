@@ -86,7 +86,6 @@ function generateList(){
 
 //Submenu select player
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 function submenu(){
     
     //Generate the submenu
@@ -96,7 +95,8 @@ function submenu(){
     //Options    
     document.getElementById("d2").innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
     document.getElementById("d3").innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
-    document.getElementById("d4").innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
+    document.getElementById("d4").innerHTML="<br>"+"<a href='javascript:resetGames();'>Reset games</a>";
+    document.getElementById("d5").innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
 
 //Delete player
@@ -104,13 +104,14 @@ function submenu(){
 function deletePlayer(){
     urlRequest=urlServer+"players/"+myPlayer.idPlayer;
         
-    document.getElementById("d2").innerHTML="<p>Confirm delete, please</p>";
-    document.getElementById("d3").innerHTML="<a href='javascript:del();' >Yes</a>";
+    document.getElementById("d2").innerHTML="<p>Confirm delete player, please</p>";
+    document.getElementById("d3").innerHTML="<a href='javascript:deletePlayerRequest();' >Yes</a>";
     document.getElementById("d4").innerHTML="<br><a href='javascript:submenu();' >No</a>";    
+    document.getElementById("d5").innerHTML="";    
 }
 
-//Delete call
-function del(){
+//Delete request
+function deletePlayerRequest(){
         $.ajax
         ({
                 url: urlRequest,
@@ -136,7 +137,6 @@ function del(){
                                 document.getElementById("d2").innerHTML= "<br><a href='./index.html'>Exit</a>"; 
                                 document.getElementById("d3").innerHTML= "";
                                 document.getElementById("d4").innerHTML= "";
-                                alert(isDeleted);
                                 break;
 
                             default:   
@@ -149,14 +149,6 @@ function del(){
                       }
 
               });
-        if(isDeleted)
-            {
-                alert(isDeleted);
-            }
-        else
-            {
-                alert(isDeleted);
-            }
 }
 
 //Rename player
@@ -173,6 +165,7 @@ function renamePlayer(){
     document.getElementById("d2").innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''/></form>"
     document.getElementById("d3").innerHTML="";
     document.getElementById("d4").innerHTML=""; 
+    document.getElementById("d5").innerHTML=""; 
     document.getElementById('newname').focus();
     }
     
@@ -220,6 +213,62 @@ function renamePlayer(){
         }
 });    
 }
+
+//Reset games
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function resetGames(){
+    urlRequest=urlServer+"players/"+myPlayer.idPlayer+"/games";
+        
+    document.getElementById("d2").innerHTML="<p>Confirm delete games, please</p>";
+    document.getElementById("d3").innerHTML="<a href='javascript:resetGamesRequest();' >Yes</a>";
+    document.getElementById("d4").innerHTML="<br><a href='javascript:submenu();' >No</a>";    
+    document.getElementById("d5").innerHTML="";    
+}
+
+//Reset games request
+function resetGamesRequest(){
+        $.ajax
+        ({
+                url: urlRequest,
+                type: 'DELETE', 
+                async: true,
+                cache: false, 
+                processData: false,               
+                contentType: "application/json; charset=utf-8",
+                dataType: "json", 
+                  success: function(data)
+                      {
+                        //Reset games done
+                        document.getElementById("d1").innerHTML= "<p class='blinky'>Games reset done</p>";
+                        document.getElementById("d2").innerHTML= "<br><a href='./index.html'>Exit</a>"; 
+                        document.getElementById("d3").innerHTML= "";
+                        document.getElementById("d4").innerHTML= "";
+                      },
+                  error: function(xhr, ajaxOptions, thrownError)
+                     {
+                         var errorMsg="";
+                          switch (xhr.status) 
+                          {                            
+                            case 409 :
+                                //Server catch error unable to delete
+                                document.getElementById("d1").innerHTML="";
+                                document.getElementById("d2").innerHTML="";
+                                document.getElementById("d3").innerHTML="<p class='blinkr'>Unable to reset</p><p class='blinkr>games for "+myPlayer.name+"</p>";
+                                document.getElementById("d4").innerHTML="";                                
+                                break;
+
+                            default:   
+                                 errorMsg="Error comunications("+xhr.status+")";
+                                 document.getElementById("d1").innerHTML="";
+                                 document.getElementById("d2").innerHTML="";
+                                 document.getElementById("d3").innerHTML="<p class='blinkr'>"+errorMsg+"</p>";
+                                 document.getElementById("d4").innerHTML="";                          
+                          }                          
+                      }
+              });
+}
+
+
 
 //Get all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
