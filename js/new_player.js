@@ -5,15 +5,10 @@ var urlServer="http://localhost:8080/";
 //✧*｡٩(ˊᗜˋ*)و✧*｡   
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function newplayer(){
-
-    var textInput= document.getElementById("d1");
-    var form = document.getElementById("d2");
-    var response = document.getElementById("d4");
-    
+     
     var myObj = { name : null }; 
     var name= document.getElementById("newname").value;
     myObj.name = name;
-    var output="XD"; 
     var created=false;    
     $.ajax
             ({
@@ -27,66 +22,84 @@ function newplayer(){
         success: function(data)
                     {                        
                         //save the idPlayer value 
-                        textInput.innerHTML = "<br>";                        
+                        document.getElementById("d1").innerHTML = "<br>";                        
                         idPlayer= data.idPlayer;
                         
                         //Change the return message
-                        output="<p class='blinky'> Created player "+name+"</p>";
+                        document.getElementById("d4").innerHTML="<p class='blinky'>Created player</p>";
                         created=true;                        
                     },
         error: function(xhr, ajaxOptions, thrownError)
                     {                        
-                        textInput.innerHTML = "<br>";
+                        document.getElementById("d1").innerHTML = "<br>";
                         created = false;
                         switch (xhr.status) 
                             {
                                 case 409 : 
-                                    output = "<p class='blinkr'>The player already exists:</p><p class='blinkr'>try again</p>";
+                                    document.getElementById("d4").innerHTML = "<p class='blinkr'>The player already exists:</p><p class='blinkr'>try again</p>";
                                     break;
                                 default:   
-                                    output = "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>"
+                                    document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>"
                             }
                     }        
             }); 
 
     if(created) 
         {
+            playgame();
             //Message player displayed
-            response.innerHTML = output; 
-            form.innerHTML ="";
-            //Load the options
-            var rows= document.getElementById("table1").rows[0].cells;
-            //Exit            
-            rows[0].innerHTML = 
-            "<a id='link' title='hello' href='./index.html'><img src='./images/exit_game.png' alt='exit' class='responsive'></a>";
-            //Void
-            rows[1].innerHTML = 
-            "<img src='./images/happy.gif' alt='penguin' class='responsive'>";
-            //Play game
-            rows[2].innerHTML = 
-            "<a id='link' title='hello' href='javascript:playgame();'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
-        }
-    else {
-        response.innerHTML = output; 
-        }         
-    return output;                             
+            // response.innerHTML = output; 
+            // document.getElementById("d2").innerHTML ="";
+            
+        }                          
 }
 
 //Play new game
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function playgame()
 {
+    
+    document.getElementById("d1").innerHTML="";
+    document.getElementById("d2").innerHTML=""; 
+    //Create the table   
+
+    var tableString = "<table id='table1' style='width: 100%'>";
+    for (row = 1; row < 2; row += 1) 
+    {
+        tableString += "<tr>";
+            for (col = 1; col < 4; col += 1) 
+            {
+                tableString += "<td class='thirtythree'> </td>";
+            }
+        tableString += "</tr>";
+    }
+    tableString += "</table>";
+    document.getElementById("d3").innerHTML = tableString;   
+      
+    alert("Aquí");
+    //Charge the game menu
     var rows= document.getElementById("table1").rows[0].cells;
+    //Exit            
+    rows[0].innerHTML = 
+    "<a id='link' title='hello' href='./index.html'><img src='./images/exit_game.png' alt='exit' class='responsive'></a>";
+    //Void
+    rows[1].innerHTML = 
+    "<img src='./images/happy.gif' alt='penguin' class='responsive'>";
+    //Play game
+    rows[2].innerHTML = 
+    "<a id='link' title='hello' href='javascript:startGame();'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
+    }
+    //+++++++++++++++++
+    function startGame(){
+    
     var response = document.getElementById("d4");
     var name ="XD"; 
     var dices = new Array(); 
     var resultTxt= "Results: ";   
     var winner = false;
-    var played = false;
     var penguin = "XD";
 
     //Play the game
-    var played = false;
     $.ajax
     ({
         url: urlServer+'players/'+idPlayer+"/games/",
@@ -98,7 +111,6 @@ function playgame()
         dataType: "json", 
         success: function(player)
             {   
-                played=true;
                 //Get the dice game result
                 var listGame = player.listGame; //Get the list of games
                 var numGames = listGame.length; //Get the number of games
@@ -141,8 +153,7 @@ function playgame()
                 played=true;                        
             },
         error: function(xhr, ajaxOptions, thrownError)
-            {                        
-                played = false;
+            {    
                 switch (xhr.status) 
                     {
                         case 409 : 
@@ -157,8 +168,9 @@ function playgame()
             }            
     });   
     //Change the output text
-    response.innerHTML = output; 
+    document.getElementById("d4").innerHTML = output; 
     //Change the penguin image
+    var rows= document.getElementById("table1").rows[0].cells;
     rows[1].innerHTML = "<img src='"+penguin+"' class='responsive'> ";
 }  
 
