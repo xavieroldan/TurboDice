@@ -2,6 +2,7 @@ var urlServer="http://localhost:8080/";
 var urlRequest = "";
 var myPlayer = { name : null, idPlayer : null};
 var editedPlayer = { name : null, idPlayer : null };
+var rateDTO= {"player":{"idPlayer":null,"name":null,"regDate":null,"listGame":[{"idGame":null,"isAnonim":false,"isWinner":false,"listDiceResult":[{"idDiceResult":null,"result":null}],"rate":null}]}};
 
 
 //Create a new player
@@ -42,22 +43,18 @@ function newplayer(){
                                     document.getElementById("d4").innerHTML = "<p class='blinkr'>The player already exists:</p><p class='blinkr'>try again</p>";
                                     break;
                                 default:   
-                                    document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>"
+                                    document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>";
                             }
                     }        
             }); 
 
     if(created) 
         {
-            playGame();
-            //Message player displayed
-            // response.innerHTML = output; 
-            // document.getElementById("d2").innerHTML ="";
-            
+            playGame();            
         }                          
 }
 
-//Play new game
+//Play new game menu
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function playGame()
 {
@@ -91,7 +88,9 @@ function playGame()
     rows[2].innerHTML = 
     "<a id='link' title='play' href='javascript:startGame();'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
     }
-    //+++++++++++++++++
+
+//Play new game request
+
     function startGame(){    
     
         var name ="XD"; 
@@ -175,9 +174,7 @@ function playGame()
         rows[1].innerHTML = "<img src='"+penguin+"' class='responsive'> ";
 }  
 
-
-
-//Radio list of all players
+//Form select players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function generateList(){ 
 
@@ -344,7 +341,7 @@ function renamePlayer(){
     }
     
 
- // Setting the name (PUT)
+ // Set the name (PUT)
  function setNewName(){        
     
     //Get the new name and full the object with the new name 
@@ -441,6 +438,98 @@ function resetGamesRequest(){
                       }
               });
 }
+
+//Ranking
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+function ranking(){
+
+    //Get the winner
+    function getWinner(){    
+        var winner = rateDTO;
+        $.ajax({
+            url: urlServer +'players/ranking/winner', 
+            async: false,
+            success: function(data)
+            {
+                winner = data;
+                
+            },       
+            error: function(xhr, ajaxOptions, thrownError)
+            {
+                document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>";
+            }
+        });
+        return winner;
+    }
+    var winner= getWinner();
+
+    //Get the loser
+    function getLoser(){
+        var loser = rateDTO;
+        $.ajax({
+            url: urlServer +'players/ranking/loser', 
+            async: false,
+            success: function(data)
+            {
+                loser = data;            
+            },        
+            error: function(xhr, ajaxOptions, thrownError)
+            {
+                document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>";
+            }
+        });
+        return loser; 
+    }    
+    var loser= getLoser();
+
+    //Get the list of players and rates
+    function getRanking(){
+        var ranking = new Array ();
+
+        $.ajax({
+            url: urlServer +'players/',
+            async: false,
+            success: function(data)
+            {
+                ranking = data;
+            },       
+            error: function(xhr, ajaxOptions, thrownError)
+            {
+                document.getElementById("d4").innerHTML= "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>";
+            }
+        });
+    return ranking;
+    } 
+    var ranking = getRanking();
+
+//TODO: Order the list
+    ranking.sort((a,b) => (a.rate<b.rate)?1 : -1);
+    var a = 1;
+    ranking.forEach(
+        function(rateDTO)
+            {
+                var a = rateDTO.player.regDate;
+                var trimed = a.substr(0, a.length -18);
+
+                console.log(a+"/"+rateDTO.player.name+"/"+trimed+"/"+rateDTO.rate+"/");
+                a++;
+            }
+        );         
+//TODO: put the winner first 
+//TODO: put the loser last
+//TODO: Creaate the view
+//TODO: Set the view
+alert("END-"+urlServer +'players/');
+}
+
+
+
+    
+
+
+
+
+
 
 
 
