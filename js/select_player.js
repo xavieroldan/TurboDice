@@ -1,9 +1,7 @@
-
 var urlServer="http://localhost:8080/";
 var myPlayer = { name : null, idPlayer : null};
+var editedPlayer = { name : null, idPlayer : null };
 var urlRequest = "";
-
-
 
 //Radio list of all players
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -19,7 +17,7 @@ function generateList(){
         url: urlHeader,
         type: 'GET',
         contentType: "application/json; charset=utf-8",        
-        async: true,
+        async: false,
         cache: false,
         processData: false,  
         success: function(data)
@@ -44,8 +42,7 @@ function generateList(){
                         selectList+="</select>";
 
                     //Output the list
-                    var printList = document.getElementById("d2") ;
-                    printList.innerHTML = selectList;
+                    document.getElementById("d2").innerHTML = selectList;
 
                     //Detect the selected player
                     var o = document.getElementById("select_list");
@@ -94,40 +91,31 @@ function submenu(){
     
     //Generate the submenu
     //Header
-    var nameText = document.getElementById("d1");
-    nameText.innerHTML="<p class='blinky'>Player "+myPlayer.name+" selected</p><br>";
+    document.getElementById("d1").innerHTML="<p class='blinky'>Player "+myPlayer.name+" selected</p><br>";
 
-    //Options
-    var editName= document.getElementById("d2");
-    var deletePlayer= document.getElementById("d3");
-    var play= document.getElementById("d4");
-    
-    editName.innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
-    deletePlayer.innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
-    play.innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
+    //Options    
+    document.getElementById("d2").innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
+    document.getElementById("d3").innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
+    document.getElementById("d4").innerHTML="<br>"+"<a href='#' onclick='#'>Play Game</a>"; 
 }
 
 //Delete player
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function deletePlayer(){
     urlRequest=urlServer+"players/"+myPlayer.idPlayer;
-    var d2Text = document.getElementById("d2");
-    var d3Text= document.getElementById("d3");
-    var d4Text= document.getElementById("d4");
-    
-    d2Text.innerHTML="<p>Confirm delete, please</p>";
-    d4Text.innerHTML="<br><a href='javascript:submenu();' >No</a>";
-    d3Text.innerHTML="<a href='javascript:del();' >Yes</a>";
+        
+    document.getElementById("d2").innerHTML="<p>Confirm delete, please</p>";
+    document.getElementById("d3").innerHTML="<a href='javascript:del();' >Yes</a>";
+    document.getElementById("d4").innerHTML="<br><a href='javascript:submenu();' >No</a>";    
 }
 
 //Delete call
 function del(){
-        var isDeleted = false;
         $.ajax
         ({
                 url: urlRequest,
                 type: 'DELETE', 
-                async: false,
+                async: true,
                 cache: false, 
                 processData: false,               
                 contentType: "application/json; charset=utf-8",
@@ -143,7 +131,12 @@ function del(){
                           switch (xhr.status) 
                           {                            
                             case 200 :
-                                isDeleted=true;//TODO: Solve the generate error on deleted
+                                //TODO: Solve the generate error on deleted
+                                document.getElementById("d1").innerHTML= "<p class='blinky'>Player deleted</p>";
+                                document.getElementById("d2").innerHTML= "<br><a href='./index.html'>Exit</a>"; 
+                                document.getElementById("d3").innerHTML= "";
+                                document.getElementById("d4").innerHTML= "";
+                                alert(isDeleted);
                                 break;
 
                             default:   
@@ -158,38 +151,28 @@ function del(){
               });
         if(isDeleted)
             {
-                document.getElementById("d1").innerHTML= "<p class='blinky'>Player deleted</p>";
-                document.getElementById("d2").innerHTML= "<br><a href='./index.html'>Exit</a>"; 
-                document.getElementById("d3").innerHTML= "";
-                document.getElementById("d4").innerHTML= "";
+                alert(isDeleted);
             }
         else
             {
-                generateList();
+                alert(isDeleted);
             }
 }
 
 //Rename player
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-//Set the menu and get the
-var editedPlayer = { name : null, idPlayer : null };
-
+//Set the menu and get the PUT
 function renamePlayer(){
     
     urlRequest=urlServer+"players/";//set the url call
     editedPlayer.idPlayer= myPlayer.idPlayer; //Set the id
 
     // Set a form to receive the new name
-    var d1Text = document.getElementById("d1");
-    var d2Text = document.getElementById("d2");
-    var d3= document.getElementById("d3");
-    var d4= document.getElementById("d4");
-    
-    d1Text.innerHTML = "<p>Input new name</p>";
-    d2Text.innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''/></form>"
-    d3.innerHTML="";
-    d4.innerHTML=""; 
+    document.getElementById("d1").innerHTML = "<p>Input new name</p>";
+    document.getElementById("d2").innerHTML = "<br><form id='rename_form' onsubmit='return setNewName()' action='javascript:void(0);'><input id='newname'required='true'maxlength='15'size='15'type='text'value=''/></form>"
+    document.getElementById("d3").innerHTML="";
+    document.getElementById("d4").innerHTML=""; 
     document.getElementById('newname').focus();
     }
     
@@ -215,11 +198,8 @@ function renamePlayer(){
         success:function(data)
         {
             //Confirm the rename and exit menu
-            var d1Text = document.getElementById("d1");
-            var d2Text = document.getElementById("d2");                
-
-            d1Text.innerHTML = "<p class='blinky'>Name changed</p>";
-            d2Text.innerHTML = "<br><a href='./index.html'>Exit</a>" 
+            document.getElementById("d1").innerHTML = "<p class='blinky'>Name changed</p>";
+            document.getElementById("d2").innerHTML = "<br><a href='./index.html'>Exit</a>" 
         },
         error:function(xhr, ajaxOptions, thrownError)
         {
@@ -234,11 +214,8 @@ function renamePlayer(){
                 default:   
                     output = "<p class='blinkr'>Communications error:</p class='blink'><p class='blinkr'>try later</p>"
             }
-            var d1Text = document.getElementById("d1");
-            var d2Text = document.getElementById("d2");                
-
-            d1Text.innerHTML = "<p class='blinkr'>"+output+"</p>";
-            d2Text.innerHTML = "<br><a href='javascript:renamePlayer();'>Try again</a>" 
+            document.getElementById("d1").innerHTML = "<p class='blinkr'>"+output+"</p>";
+            document.getElementById("d2").innerHTML = "<br><a href='javascript:renamePlayer();'>Try again</a>" 
 
         }
 });    

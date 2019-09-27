@@ -162,16 +162,3 @@ function playgame()
     rows[1].innerHTML = "<img src='"+penguin+"' class='responsive'> ";
 }  
 
-//Get all players
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function getall(){
-    var options = {
-        method: 'get'
-        }
-    alert("Enviado el GET");
-
-    fetch(urlServer+'getall', options).then(response => {
-        document.getElementById("incoming").innerHTML = response
-        }).catch(error => console.error(error))
-}
-
