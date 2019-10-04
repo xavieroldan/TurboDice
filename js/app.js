@@ -61,6 +61,8 @@ function playGame()
     
     document.getElementById("d1").innerHTML="";
     document.getElementById("d2").innerHTML=""; 
+    document.getElementById("d4").innerHTML="<br>Let's play!"; 
+    document.getElementById("d5").innerHTML=""; 
     //Create the table   
 
     var tableString = "<table id='table1' style='width: 100%'>";
@@ -483,6 +485,7 @@ function ranking(){
     var loser= getLoser();
 
     //Get the list of players and rates
+
     function getRanking(){
         var ranking = new Array ();
 
@@ -502,24 +505,34 @@ function ranking(){
     } 
     var ranking = getRanking();
 
-//TODO: Order the list
-    ranking.sort((a,b) => (a.rate<b.rate)?1 : -1);
-    var a = 1;
-    ranking.forEach(
-        function(rateDTO)
-            {
-                var a = rateDTO.player.regDate;
-                var trimed = a.substr(0, a.length -18);
+//TODO: Create the view
+    // var output="Pos Name Games Days Exp Rate";
+    var output="Pos Name Exp Rate";
+    var i=1;
 
-                console.log(a+"/"+rateDTO.player.name+"/"+trimed+"/"+rateDTO.rate+"/");
-                a++;
-            }
-        );         
-//TODO: put the winner first 
-//TODO: put the loser last
-//TODO: Creaate the view
+    ranking.forEach(function(rateDTO)
+    {
+        //To calculate the experience
+        var today = Date.parse(new Date()); 
+        const oneDay = 24 * 60 * 60 * 1000;
+        var firstDate = Date.parse(rateDTO.player.regDate);
+        var diffDays = Math.abs((firstDate - today) / oneDay).toFixed(1);
+        var experience = ((diffDays * rateDTO.player.listGame.length)/10).toFixed(1);
+        
+        output+="<p>"+i
+        +" "+rateDTO.player.name
+        // +" "+rateDTO.player.listGame.length
+        // +" "+diffDays
+        +" "+experience
+        +" "+rateDTO.rate 
+        
+        +"</p>";
+        i++;
+    })
+
+    document.getElementById("d1").innerHTML=output;
 //TODO: Set the view
-alert("END-"+urlServer +'players/');
+// alert("END-"+urlServer +'players/');
 }
 
 
