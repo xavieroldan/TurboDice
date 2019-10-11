@@ -58,48 +58,20 @@ function newplayer(){
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function playGame()
 {
-    
-    document.getElementById("d1").innerHTML="";
-    document.getElementById("d2").innerHTML=""; 
-    document.getElementById("d4").innerHTML="<br>Let's play!"; 
-    document.getElementById("d5").innerHTML=""; 
-    //Create the table   
-
-    var tableString = "<table id='table1' style='width: 100%'>";
-    for (row = 1; row < 2; row += 1) 
-    {
-        tableString += "<tr>";
-            for (col = 1; col < 4; col += 1) 
-            {
-                tableString += "<td class='thirtythree'> </td>";
-            }
-        tableString += "</tr>";
-    }
-    tableString += "</table>";
-    document.getElementById("d3").innerHTML = tableString; 
-
-    //Charge the game menu
-    var rows= document.getElementById("table1").rows[0].cells;
-    //Exit            
-    rows[0].innerHTML = 
-    "<a id='link' title='exit' href='./index.html'><img src='./images/exit_game.png' alt='exit' class='responsive'></a>";
-    //Void
-    rows[1].innerHTML = 
-    "<img src='./images/happy.gif' alt='penguin' class='responsive'>";
-    //Play game
-    rows[2].innerHTML = 
-    "<a id='link' title='play' href='javascript:startGame();'><img src='./images/play_again.png' alt='play' class='responsive'></a>";
+   //Charge the game menu
+    document.getElementById("h2").innerHTML="<div class='row justify-content-center mb-sm-3 mb-4 mt-sm-5' id='d1'><div class='col-12 col-sm-4 align-self-center'><a id='link' title='exit' href='./index.html'><img class='img-fluid' src='./images/exit.png' alt='exit'></a></div><div class='col-12 col-sm-4' id='penguin'><img class='img-fluid' src='./images/happy.gif' alt='penguin'></div><div class='col-12 col-sm-4 align-self-center'><a id='link' title='play' href='javascript:startGame();'><img class='img-fluid' src='./images/play.png' alt='play'></a></div></div><div class='row justify-content-center mb-sm-3 mb-4' id='d2'><p class='blinky'>Lets play!</p></div><div class='row justify-content-center mb-sm-3 mb-4' id='d3'></div><div class='row justify-content-center mb-sm-3 mb-4' id='d4'></div>";    
     }
 
 //Play new game request
 
     function startGame(){    
     
-        var name ="XD"; 
+        var name =""; 
         var dices = new Array(); 
-        var resultTxt= "Results: ";   
+        var resultTxt= "";   
         var winner = false;
-        var penguin = "XD";
+        var penguin = "";
+        var outputText=""
 
         //Play the game
         $.ajax
@@ -134,25 +106,22 @@ function playGame()
                     if(winner)
                     {
                         //Wins
-                        // output= "<p>"+name+":<p class='blinky'>You win!</p>";
-                        output= "<p class='blinky'>You win!</p>";
+                        outputText= "<span class='blinky'>You win!</span>";
                         penguin="./images/happy.gif"
                     }
                     else
                     {
                         //Lost
-                        // output= "<p>"+name+"<p class='blinkr'>You lost!</p>";
-                        output= "<p class='blinkr'>You lost!</p>";
+                        outputText= "<span class='blinkr'>You lost!</span>";
                         penguin="./images/cry.gif"
                     }
                     //Add the dice results
+                    resultTxt="<span class='blinky'>";
                     dices.forEach(function(result) 
                         {
                         resultTxt += result+" ";
                         });
-                    //Add the dices results
-                    output+="<p>"+resultTxt+"</p>";
-                    played=true;                        
+                    resultTxt+="</span>";             
                 },
             error: function(xhr, ajaxOptions, thrownError)
                 {    
@@ -169,11 +138,13 @@ function playGame()
                         }
                 }            
         });   
-        //Change the output text
-        document.getElementById("d4").innerHTML = output; 
+        //Change the output win/lost
+        document.getElementById("d2").innerHTML = outputText; 
+        //Change the output dice results
+        document.getElementById("d3").innerHTML = "<span>Results</span>";
+        document.getElementById("d4").innerHTML = resultTxt; 
         //Change the penguin image
-        var rows= document.getElementById("table1").rows[0].cells;
-        rows[1].innerHTML = "<img src='"+penguin+"' class='responsive'> ";
+        document.getElementById("penguin").innerHTML="<img class='img-fluid' src='"+penguin+"' alt='penguin'>";
 }  
 
 //Form select players
@@ -263,13 +234,13 @@ function submenu(){
     
     //Generate the submenu
     //Header
-    document.getElementById("d1").innerHTML="<p class='blinky'>Player "+myPlayer.name+" selected</p><br>";
-
-    //Options    
-    document.getElementById("d2").innerHTML="<a href='javascript:renamePlayer();'>Rename player</a>";
-    document.getElementById("d3").innerHTML="<br>"+"<a href='javascript:deletePlayer();'>Delete player</a>";
-    document.getElementById("d4").innerHTML="<br>"+"<a href='javascript:resetGames();'>Reset games</a>";
-    document.getElementById("d5").innerHTML="<br>"+"<a href='javascript:playGame()'>Play Game</a>"; 
+    document.getElementById("d1").innerHTML="<p class='blinky'>"+myPlayer.name+" selected</p>";
+    //Options  
+    document.getElementById("d2").innerHTML="<a href='javascript:playGame();'>Play</a>"; 
+    document.getElementById("d3").innerHTML="<a href='javascript:renamePlayer();'>Rename</a>";
+    document.getElementById("d4").innerHTML="<a href='javascript:deletePlayer();'>Delete</a>";
+    document.getElementById("d5").innerHTML="<a href='javascript:resetGames();'>Reset games</a>";
+    
 }
 
 //Delete player
