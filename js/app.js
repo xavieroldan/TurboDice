@@ -116,10 +116,10 @@ function playGame()
                         penguin="./images/cry.gif"
                     }
                     //Add the dice results
-                    resultTxt="<span class='blinky'>";
+                    resultTxt="<span class='blinky'> | ";
                     dices.forEach(function(result) 
                         {
-                        resultTxt += result+" ";
+                        resultTxt += result+" | ";
                         });
                     resultTxt+="</span>";             
                 },
@@ -138,11 +138,11 @@ function playGame()
                         }
                 }            
         });   
-        //Change the output win/lost
-        document.getElementById("d2").innerHTML = outputText; 
+        
         //Change the output dice results
-        document.getElementById("d3").innerHTML = "<span>Results</span>";
-        document.getElementById("d4").innerHTML = resultTxt; 
+        document.getElementById("d2").innerHTML = resultTxt; 
+        //Change the output win/lost
+        document.getElementById("d3").innerHTML = outputText;         
         //Change the penguin image
         document.getElementById("penguin").innerHTML="<img class='img-fluid' src='"+penguin+"' alt='penguin'>";
 }  
